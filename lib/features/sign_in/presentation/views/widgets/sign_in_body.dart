@@ -2,15 +2,15 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:subul_manager_dashboard/core/helpers/extensions.dart';
-import 'package:subul_manager_dashboard/core/routing/routes.dart';
-import 'package:subul_manager_dashboard/core/theming/app_colors.dart';
-import 'package:subul_manager_dashboard/core/utils/functions/show_snack_bar.dart';
-import 'package:subul_manager_dashboard/core/widgets/custom_ok_button.dart';
-import 'package:subul_manager_dashboard/core/widgets/custom_progress_indicator.dart';
-import 'package:subul_manager_dashboard/core/widgets/custom_text_field.dart';
-import 'package:subul_manager_dashboard/core/widgets/text_logo.dart';
-import 'package:subul_manager_dashboard/features/sign_in/presentation/manager/sign_in_cubit/sign_in_cubit.dart';
+import 'package:warehouse_subul/core/helpers/extensions.dart';
+import 'package:warehouse_subul/core/routing/routes.dart';
+import 'package:warehouse_subul/core/theming/app_colors.dart';
+import 'package:warehouse_subul/core/utils/functions/show_snack_bar.dart';
+import 'package:warehouse_subul/core/widgets/custom_ok_button.dart';
+import 'package:warehouse_subul/core/widgets/custom_progress_indicator.dart';
+import 'package:warehouse_subul/core/widgets/custom_text_field.dart';
+import 'package:warehouse_subul/core/widgets/text_logo.dart';
+import 'package:warehouse_subul/features/sign_in/presentation/manager/sign_in_cubit/sign_in_cubit.dart';
 
 class SignInBody extends StatefulWidget {
   const SignInBody({super.key});
@@ -116,7 +116,7 @@ class _SignInBodyState extends State<SignInBody> {
             showSnackBar(context,'تم تسجيل الدخول بنجاح',Colors.green);
             Future.delayed(Duration(seconds: 2));
             context.pushNamedAndRemoveUntil(
-              Routes.homeView,
+              Routes.warehouseManager,
               predicate: (route) => false,
             );
             // Navigate to another screen if needed

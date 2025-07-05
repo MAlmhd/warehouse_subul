@@ -1,10 +1,10 @@
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
-import 'package:subul_manager_dashboard/core/data/auth_local_data_source.dart';
-import 'package:subul_manager_dashboard/core/errors/failure.dart';
-import 'package:subul_manager_dashboard/features/sign_in/data/data_sources/sign_in_remote_data_source.dart';
-import 'package:subul_manager_dashboard/features/sign_in/domain/entites/sign_in_entity.dart';
-import 'package:subul_manager_dashboard/features/sign_in/domain/repos/sign_in_repo.dart';
+import 'package:warehouse_subul/core/data/auth_local_data_source.dart';
+import 'package:warehouse_subul/core/errors/failure.dart';
+import 'package:warehouse_subul/features/sign_in/data/data_sources/sign_in_remote_data_source.dart';
+import 'package:warehouse_subul/features/sign_in/domain/entites/sign_in_entity.dart';
+import 'package:warehouse_subul/features/sign_in/domain/repos/sign_in_repo.dart';
 
 class SignInRepoImpl implements SignInRepo {
   final SignInRemoteDataSource signInRemoteDataSource;

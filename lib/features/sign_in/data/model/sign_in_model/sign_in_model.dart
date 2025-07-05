@@ -1,6 +1,6 @@
 
 
-import 'package:subul_manager_dashboard/features/sign_in/domain/entites/sign_in_entity.dart';
+import 'package:warehouse_subul/features/sign_in/domain/entites/sign_in_entity.dart';
 
 class SignInModel extends SignInEntity {
 	final bool? success;

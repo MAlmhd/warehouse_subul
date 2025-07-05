@@ -1,8 +1,8 @@
 import 'package:dartz/dartz.dart';
-import 'package:subul_manager_dashboard/core/errors/failure.dart';
-import 'package:subul_manager_dashboard/core/use_cases/use_case.dart';
-import 'package:subul_manager_dashboard/features/sign_in/domain/entites/sign_in_entity.dart';
-import 'package:subul_manager_dashboard/features/sign_in/domain/repos/sign_in_repo.dart';
+import 'package:warehouse_subul/core/errors/failure.dart';
+import 'package:warehouse_subul/core/use_cases/use_case.dart';
+import 'package:warehouse_subul/features/sign_in/domain/entites/sign_in_entity.dart';
+import 'package:warehouse_subul/features/sign_in/domain/repos/sign_in_repo.dart';
 
 class SignInUseCase extends UseCase<SignInEntity, SignInParams> {
   final SignInRepo signInRepo;
