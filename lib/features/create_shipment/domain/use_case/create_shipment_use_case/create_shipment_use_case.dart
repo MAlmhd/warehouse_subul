@@ -20,6 +20,8 @@ class CreateShipmentUseCase
       supplierNumber: params.supplierNumber,
       declaredParcelsCount: params.declaredParcelsCount,
       notes: params.notes,
+      originCountryId: params.originCountryId,
+      destenationCountryId: params.destenationCountryId,
     );
   }
 }
@@ -31,8 +33,11 @@ class CreateShipmentParams {
   final String supplierNumber;
   final String declaredParcelsCount;
   final String notes;
+  final int originCountryId;
+  final int destenationCountryId;
 
-  CreateShipmentParams({
+  CreateShipmentParams( {
+   required this.originCountryId,required this.destenationCountryId,
     required this.type,
     required this.customerId,
     required this.supplierName,

@@ -6,8 +6,10 @@ import 'package:warehouse_subul/core/theming/app_colors.dart';
 import 'package:warehouse_subul/core/utils/service_locator.dart';
 import 'package:warehouse_subul/core/widgets/custom_icon_of_side_bar.dart';
 import 'package:warehouse_subul/core/widgets/text_logo.dart';
+import 'package:warehouse_subul/features/create_shipment/domain/use_case/create_shipment_use_case/create_shipment_use_case.dart';
 import 'package:warehouse_subul/features/create_shipment/domain/use_case/get_countries_use_case/get_countries_use_case.dart';
 import 'package:warehouse_subul/features/create_shipment/domain/use_case/get_users_use_case/get_user_use_case.dart';
+import 'package:warehouse_subul/features/create_shipment/presentation/manager/create_shipment_cubit/create_shipment_cubit.dart';
 import 'package:warehouse_subul/features/create_shipment/presentation/manager/get_countries_cubit/get_countries_cubit.dart';
 import 'package:warehouse_subul/features/create_shipment/presentation/manager/get_users_cubit/get_users_cubit.dart';
 import 'package:warehouse_subul/features/create_shipment/presentation/views/add_shipment_form.dart';
@@ -105,6 +107,7 @@ class _WarehouseManagerState extends State<WarehouseManager> {
                                   GetUsersCubit(sl.get<GetUserUseCase>()),
                         ),
                         BlocProvider(create: (context) => GetCountriesCubit(sl.get<GetCountriesUseCase>())),
+                        BlocProvider(create: (context) => CreateShipmentCubit(sl.get<CreateShipmentUseCase>())),
                       ],
                       child: AddShipmentForm(),
                     ),

@@ -18,6 +18,7 @@ class CreateShipmentRepoImpl implements CreateShipmentRepo {
     required String supplierNumber,
     required String declaredParcelsCount,
     required String notes,
+    required int originCountryId,required int destenationCountryId
   }) async {
     try {
       var data = await createShipmentRemoteDataSource.createShipment(
@@ -26,7 +27,7 @@ class CreateShipmentRepoImpl implements CreateShipmentRepo {
         supplierName: supplierName,
         supplierNumber: supplierNumber,
         declaredParcelsCount: declaredParcelsCount,
-        notes: notes,
+        notes: notes, originCountryId: originCountryId, destenationCountryId: destenationCountryId,
       );
       return right(data);
     } catch (e) {

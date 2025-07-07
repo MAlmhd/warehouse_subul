@@ -12,6 +12,7 @@ class GenericDropdownField<T> extends StatelessWidget {
   final String hintText;
   final SvgPicture svgIcon;
   final Icon? trailingIcon;
+  final String? Function(T?)? validator;
 
   const GenericDropdownField({
     super.key,
@@ -22,55 +23,56 @@ class GenericDropdownField<T> extends StatelessWidget {
     required this.hintText,
     required this.svgIcon,
     this.trailingIcon,
+    this.validator,
   });
 
   @override
   Widget build(BuildContext context) {
     return Container(
       width: 140.w,
-      height: 50.h,
+      height: 60.h,
       padding: EdgeInsets.symmetric(horizontal: 8.w),
       decoration: BoxDecoration(
         color: AppColors.goldenYellow,
         borderRadius: BorderRadius.circular(10),
         border: Border.all(color: AppColors.deepGray, width: 1),
       ),
-      child: DropdownButtonHideUnderline(
-        child: DropdownButton<T>(
-          isExpanded: true,
-          value: selectedItem,
-          icon: trailingIcon ?? const Icon(Icons.keyboard_arrow_down_rounded),
-          items: items.map((item) {
-            return DropdownMenuItem<T>(
-              value: item,
-              child: Row(
-                children: [
-                  svgIcon,
-                  SizedBox(width: 8.w),
-                  Expanded(
-                    child: Text(
-                      itemAsString(item),
-                      style: Styles.textStyle3Sp,
-                      overflow: TextOverflow.ellipsis,
-                    ),
+      child: DropdownButtonFormField<T>(
+        isExpanded: true,
+        value: selectedItem,
+        validator: validator,
+        icon: trailingIcon ?? const Icon(Icons.keyboard_arrow_down_rounded),
+        decoration: const InputDecoration.collapsed(hintText: ''),
+        items: items.map((item) {
+          return DropdownMenuItem<T>(
+            value: item,
+            child: Row(
+              children: [
+                svgIcon,
+                SizedBox(width: 8.w),
+                Expanded(
+                  child: Text(
+                    itemAsString(item),
+                    style: Styles.textStyle3Sp,
+                    overflow: TextOverflow.ellipsis,
                   ),
-                ],
-              ),
-            );
-          }).toList(),
-          onChanged: onChanged,
-          hint: Row(
-            children: [
-              svgIcon,
-              SizedBox(width: 8.w),
-              Text(
-                hintText,
-                style: Styles.textStyle3Sp.copyWith(
-                  color: AppColors.black.withValues(alpha: 0.4),
                 ),
+              ],
+            ),
+          );
+        }).toList(),
+        onChanged: onChanged,
+        hint: Row(
+          children: [
+            svgIcon,
+            SizedBox(width: 8.w),
+            Text(
+              hintText,
+              style: Styles.textStyle3Sp.copyWith(
+                color: AppColors.black.withAlpha(100),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

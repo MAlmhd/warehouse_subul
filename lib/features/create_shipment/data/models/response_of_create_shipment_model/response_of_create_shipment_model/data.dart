@@ -4,9 +4,11 @@ class Data {
 	int? supplierId;
 	String? supplierName;
 	String? supplierNumber;
+	String? originCountryId;
+	String? destinationCountryId;
 	String? declaredParcelsCount;
 	String? notes;
-	String? status;
+	dynamic status;
 	int? createdByUserId;
 	String? trackingNumber;
 	bool? isApproved;
@@ -20,6 +22,8 @@ class Data {
 		this.supplierId, 
 		this.supplierName, 
 		this.supplierNumber, 
+		this.originCountryId, 
+		this.destinationCountryId, 
 		this.declaredParcelsCount, 
 		this.notes, 
 		this.status, 
@@ -37,9 +41,11 @@ class Data {
 				supplierId: json['supplier_id'] as int?,
 				supplierName: json['supplier_name'] as String?,
 				supplierNumber: json['supplier_number'] as String?,
+				originCountryId: json['origin_country_id'] as String?,
+				destinationCountryId: json['destination_country_id'] as String?,
 				declaredParcelsCount: json['declared_parcels_count'] as String?,
 				notes: json['notes'] as String?,
-				status: json['status'] as String?,
+				status: json['status'] as dynamic,
 				createdByUserId: json['created_by_user_id'] as int?,
 				trackingNumber: json['tracking_number'] as String?,
 				isApproved: json['is_approved'] as bool?,
@@ -58,6 +64,8 @@ class Data {
 				'supplier_id': supplierId,
 				'supplier_name': supplierName,
 				'supplier_number': supplierNumber,
+				'origin_country_id': originCountryId,
+				'destination_country_id': destinationCountryId,
 				'declared_parcels_count': declaredParcelsCount,
 				'notes': notes,
 				'status': status,
