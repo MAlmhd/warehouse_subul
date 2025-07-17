@@ -15,13 +15,21 @@ import 'package:warehouse_subul/features/create_shipment/domain/repos/get_users_
 import 'package:warehouse_subul/features/create_shipment/domain/use_case/create_shipment_use_case/create_shipment_use_case.dart';
 import 'package:warehouse_subul/features/create_shipment/domain/use_case/get_countries_use_case/get_countries_use_case.dart';
 import 'package:warehouse_subul/features/create_shipment/domain/use_case/get_users_use_case/get_user_use_case.dart';
+import 'package:warehouse_subul/features/get_shipment_in_process/data/data_source/get_drivers_data_source/get_drivers_remote_data_source.dart';
 import 'package:warehouse_subul/features/get_shipment_in_process/data/data_source/get_shipments_in_process_data_source/get_shipment_in_process_remote_data_source.dart';
+import 'package:warehouse_subul/features/get_shipment_in_process/data/data_source/update_shipment_destenation_data_source/update_shipment_destenation_remote_date_source.dart';
 import 'package:warehouse_subul/features/get_shipment_in_process/data/data_source/update_shipment_origin_country_data_source/update_shipment_origin_country_remote_data_source.dart';
+import 'package:warehouse_subul/features/get_shipment_in_process/data/repos/get_drivers_repo_impl/get_drivers_repo_impl.dart';
 import 'package:warehouse_subul/features/get_shipment_in_process/data/repos/get_shipments_in_process_repo_impl/get_shipments_in_process_repo_impl.dart';
+import 'package:warehouse_subul/features/get_shipment_in_process/data/repos/update_shipment_destenation_repo_impl/update_shipment_destenation_repo_impl.dart';
 import 'package:warehouse_subul/features/get_shipment_in_process/data/repos/update_shipment_origin_country_repo_impl/update_shipment_origin_country_repo_impl.dart';
+import 'package:warehouse_subul/features/get_shipment_in_process/domain/repos/get_drivers_repo/get_drivers_repo.dart';
 import 'package:warehouse_subul/features/get_shipment_in_process/domain/repos/get_shipments_in_process_repo/get_shipments_in_process_repo.dart';
+import 'package:warehouse_subul/features/get_shipment_in_process/domain/repos/update_shipment_destenation_country_repo/update_shipment_destenation_country_repo.dart';
 import 'package:warehouse_subul/features/get_shipment_in_process/domain/repos/update_shipment_origin_country_repo/update_shipment_origin_country_repo.dart';
+import 'package:warehouse_subul/features/get_shipment_in_process/domain/use_case/get_drivers_use_case/get_drivers_use_case.dart';
 import 'package:warehouse_subul/features/get_shipment_in_process/domain/use_case/get_shipments_in_process_use_case/get_shipments_in_process_use_case.dart';
+import 'package:warehouse_subul/features/get_shipment_in_process/domain/use_case/update_shipment_destenation_country_use_case/update_shipment_destenation_country_use_case.dart';
 import 'package:warehouse_subul/features/get_shipment_in_process/domain/use_case/update_shipment_origin_country_use_case/update_shipment_origin_use_case.dart';
 import 'package:warehouse_subul/features/sign_in/data/data_sources/sign_in_remote_data_source.dart';
 import 'package:warehouse_subul/features/sign_in/data/repos/sign_in_repo_impl.dart';
@@ -106,4 +114,30 @@ void setupServiceLocator() {
   sl.registerLazySingleton<UpdateShipmentOriginUseCase>(
     () => UpdateShipmentOriginUseCase(sl.get<UpdateShipmentOriginCountryRepo>()),
   );
+
+  // update shipment destenation country
+    sl.registerLazySingleton<UpdateShipmentDestenationRemoteDateSource>(
+    ()=> UpdateShipmentDestenationRemoteDateSourceImpl(sl.get<ApiService>())
+  );
+  sl.registerLazySingleton<UpdateShipmentDestenationCountryRepo>(
+    ()=> UpdateShipmentDestenationRepoImpl(sl.get<UpdateShipmentDestenationRemoteDateSource>())
+  );
+  sl.registerLazySingleton<UpdateShipmentDestenationCountryUseCase>(
+    () => UpdateShipmentDestenationCountryUseCase(sl.get<UpdateShipmentDestenationCountryRepo>()),
+  );
+
+
+  
+  // get drivers
+    sl.registerLazySingleton<GetDriversRemoteDataSource>(
+    ()=> GetDriversRemoteDataSourceImpl(sl.get<ApiService>())
+  );
+  sl.registerLazySingleton<GetDriversRepo>(
+    ()=> GetDriversRepoImpl(sl.get<GetDriversRemoteDataSource>())
+  );
+  sl.registerLazySingleton<GetDriversUseCase>(
+    () => GetDriversUseCase(sl.get<GetDriversRepo>()),
+  );
+
+
 }

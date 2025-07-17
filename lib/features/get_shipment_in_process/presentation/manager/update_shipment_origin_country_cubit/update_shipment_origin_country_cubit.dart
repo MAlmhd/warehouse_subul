@@ -17,9 +17,11 @@ class UpdateShipmentOriginCountryCubit
   }) async {
     emit(UpdateShipmentOriginCountryLoading());
 
-    UpdateOriginCountryParam updateOriginCountryParam =
-        UpdateOriginCountryParam(idShipment: idShipment, idCountry: idCountry);
-    var data = await updateShipmentOriginUseCase.call(updateOriginCountryParam);
+    UpdateCountryParam updateCountryParam = UpdateCountryParam(
+      idShipment: idShipment,
+      idCountry: idCountry,
+    );
+    var data = await updateShipmentOriginUseCase.call(updateCountryParam);
     data.fold(
       (failure) {
         emit(UpdateShipmentOriginCountryFailure(failure.message));

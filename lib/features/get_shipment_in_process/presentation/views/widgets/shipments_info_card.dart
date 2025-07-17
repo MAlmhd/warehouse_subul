@@ -8,7 +8,9 @@ import 'package:warehouse_subul/core/helpers/styles.dart';
 import 'package:warehouse_subul/core/theming/app_colors.dart';
 import 'package:warehouse_subul/core/utils/service_locator.dart';
 import 'package:warehouse_subul/features/get_shipment_in_process/domain/entities/shipment_in_process_entity/shipment_in_process_entity.dart';
+import 'package:warehouse_subul/features/get_shipment_in_process/domain/use_case/update_shipment_destenation_country_use_case/update_shipment_destenation_country_use_case.dart';
 import 'package:warehouse_subul/features/get_shipment_in_process/domain/use_case/update_shipment_origin_country_use_case/update_shipment_origin_use_case.dart';
+import 'package:warehouse_subul/features/get_shipment_in_process/presentation/manager/update_shipment_destenation_country_cubit/update_shipment_destenation_country_cubit.dart';
 import 'package:warehouse_subul/features/get_shipment_in_process/presentation/manager/update_shipment_origin_country_cubit/update_shipment_origin_country_cubit.dart';
 import 'package:warehouse_subul/features/get_shipment_in_process/presentation/views/widgets/country_switch_container.dart';
 
@@ -78,7 +80,11 @@ class ShipmentInfoCard extends StatelessWidget {
             right: 4,
             child: IconButton(
               iconSize: 5,
-              icon: Icon(Icons.edit, size: 8.sp, color: AppColors.goldenYellow),
+              icon: Icon(
+                Icons.edit,
+                size: 8.sp,
+                color: AppColors.goldenYellow,
+              ),
               onPressed: () {
                 showModalBottomSheet(
                   context: context,
@@ -88,9 +94,22 @@ class ShipmentInfoCard extends StatelessWidget {
                     ),
                   ),
                   builder: (_) {
-                    return BlocProvider(
-                      create: (context) => UpdateShipmentOriginCountryCubit(sl.get<UpdateShipmentOriginUseCase>()),
-                      child: CountrySwitchContainer(idShipment: shipment!.id,),
+                    return MultiBlocProvider(
+                      providers: [
+                        BlocProvider(
+                create:
+                    (context) => UpdateShipmentOriginCountryCubit(
+                      sl.get<UpdateShipmentOriginUseCase>(),
+                    ),
+              ),
+              BlocProvider(
+                create:
+                    (context) => UpdateShipmentDestenationCountryCubit(
+                      sl.get<UpdateShipmentDestenationCountryUseCase>(),
+                    ),
+              ),
+                      ],
+                      child: CountrySwitchContainer(idShipment: shipment!.id),
                     );
                   },
                 );

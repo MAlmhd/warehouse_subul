@@ -5,13 +5,13 @@ import 'package:warehouse_subul/features/get_shipment_in_process/domain/entities
 import 'package:warehouse_subul/features/get_shipment_in_process/domain/repos/update_shipment_origin_country_repo/update_shipment_origin_country_repo.dart';
 
 class UpdateShipmentOriginUseCase
-    extends UseCase<UpdateOriginCountryEntity, UpdateOriginCountryParam> {
+    extends UseCase<UpdateOriginCountryEntity, UpdateCountryParam> {
   final UpdateShipmentOriginCountryRepo updateShipmentOriginCountryRepo;
 
   UpdateShipmentOriginUseCase(this.updateShipmentOriginCountryRepo);
   @override
   Future<Either<Failure, UpdateOriginCountryEntity>> call([
-    UpdateOriginCountryParam? params,
+    UpdateCountryParam? params,
   ]) async {
     return await updateShipmentOriginCountryRepo.updateCountry(
       idShipment: params!.idShipment,
@@ -20,9 +20,9 @@ class UpdateShipmentOriginUseCase
   }
 }
 
-class UpdateOriginCountryParam {
+class UpdateCountryParam {
   final int idShipment;
   final int idCountry;
 
-  UpdateOriginCountryParam({required this.idShipment, required this.idCountry});
+  UpdateCountryParam({required this.idShipment, required this.idCountry});
 }
