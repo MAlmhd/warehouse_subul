@@ -37,42 +37,44 @@ class GenericDropdownField<T> extends StatelessWidget {
         borderRadius: BorderRadius.circular(10),
         border: Border.all(color: AppColors.deepGray, width: 1),
       ),
-      child: DropdownButtonFormField<T>(
-        isExpanded: true,
-        value: selectedItem,
-        validator: validator,
-        icon: trailingIcon ?? const Icon(Icons.keyboard_arrow_down_rounded),
-        decoration: const InputDecoration.collapsed(hintText: ''),
-        items: items.map((item) {
-          return DropdownMenuItem<T>(
-            value: item,
-            child: Row(
-              children: [
-                svgIcon,
-                SizedBox(width: 8.w),
-                Expanded(
-                  child: Text(
-                    itemAsString(item),
-                    style: Styles.textStyle3Sp,
-                    overflow: TextOverflow.ellipsis,
+      child: Center(
+        child: DropdownButtonFormField<T>(
+          isExpanded: true,
+          value: selectedItem,
+          validator: validator,
+          icon: trailingIcon ?? const Icon(Icons.keyboard_arrow_down_rounded),
+          decoration: const InputDecoration.collapsed(hintText: ''),
+          items: items.map((item) {
+            return DropdownMenuItem<T>(
+              value: item,
+              child: Row(
+                children: [
+                  svgIcon,
+                  SizedBox(width: 8.w),
+                  Expanded(
+                    child: Text(
+                      itemAsString(item),
+                      style: Styles.textStyle3Sp,
+                      overflow: TextOverflow.ellipsis,
+                    ),
                   ),
-                ),
-              ],
-            ),
-          );
-        }).toList(),
-        onChanged: onChanged,
-        hint: Row(
-          children: [
-            svgIcon,
-            SizedBox(width: 8.w),
-            Text(
-              hintText,
-              style: Styles.textStyle3Sp.copyWith(
-                color: AppColors.black.withAlpha(100),
+                ],
               ),
-            ),
-          ],
+            );
+          }).toList(),
+          onChanged: onChanged,
+          hint: Row(
+            children: [
+              svgIcon,
+              SizedBox(width: 8.w),
+              Text(
+                hintText,
+                style: Styles.textStyle3Sp.copyWith(
+                  color: AppColors.black.withAlpha(100),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

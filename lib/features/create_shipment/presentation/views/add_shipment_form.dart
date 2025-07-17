@@ -153,7 +153,7 @@ class _AddShipmentFormState extends State<AddShipmentForm> {
           CustomInputField(
             controller: supplierNameController,
             hintText: 'اسم المزود',
-            svgPicture: SvgPicture.asset(AssetsData.persons, height: 20.h),
+            svgPicture: SvgPicture.asset(AssetsData.persons, height: 15.h),
             validator:
                 (value) =>
                     value == null || value.isEmpty
@@ -166,7 +166,7 @@ class _AddShipmentFormState extends State<AddShipmentForm> {
           CustomInputField(
             controller: supplierNumberController,
             hintText: 'رقم المزود',
-            svgPicture: SvgPicture.asset(AssetsData.persons, height: 20.h),
+            svgPicture: SvgPicture.asset(AssetsData.persons, height: 15.h),
             validator:
                 (value) =>
                     value == null || value.isEmpty
@@ -179,7 +179,7 @@ class _AddShipmentFormState extends State<AddShipmentForm> {
           CustomInputField(
             controller: declaredParcelsCountController,
             hintText: 'عدد الطرود',
-            svgPicture: SvgPicture.asset(AssetsData.box, height: 20.h),
+            svgPicture: SvgPicture.asset(AssetsData.boxNotFilled, height: 15.h),
             validator:
                 (value) =>
                     value == null || value.isEmpty
@@ -192,7 +192,7 @@ class _AddShipmentFormState extends State<AddShipmentForm> {
           CustomInputField(
             controller: notesController,
             hintText: 'ملاحظات',
-            svgPicture: SvgPicture.asset(AssetsData.notesIcon, height: 20.h),
+            svgPicture: SvgPicture.asset(AssetsData.notesIcon, height: 15.h),
             validator:
                 (value) =>
                     value == null || value.isEmpty

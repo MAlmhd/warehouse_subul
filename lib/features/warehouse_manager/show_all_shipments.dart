@@ -5,7 +5,7 @@ import 'package:warehouse_subul/core/helpers/styles.dart';
 import 'package:warehouse_subul/core/theming/app_colors.dart';
 import 'package:warehouse_subul/core/widgets/custom_search_item.dart';
 import 'package:warehouse_subul/core/widgets/text_logo.dart';
-import 'package:warehouse_subul/features/warehouse_manager/ui/widgets/custom_item_in_show_all_shipments_table.dart';
+import 'package:warehouse_subul/features/warehouse_manager/custom_item_in_show_all_shipments_table.dart';
 import 'package:warehouse_subul/features/warehouse_manager/ui/widgets/name_of_columns_in_show_all_shipments_table.dart';
 
 class ShowAllShipments extends StatelessWidget {

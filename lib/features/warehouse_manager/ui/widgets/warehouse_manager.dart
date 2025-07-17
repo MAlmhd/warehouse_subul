@@ -13,6 +13,10 @@ import 'package:warehouse_subul/features/create_shipment/presentation/manager/cr
 import 'package:warehouse_subul/features/create_shipment/presentation/manager/get_countries_cubit/get_countries_cubit.dart';
 import 'package:warehouse_subul/features/create_shipment/presentation/manager/get_users_cubit/get_users_cubit.dart';
 import 'package:warehouse_subul/features/create_shipment/presentation/views/add_shipment_form.dart';
+import 'package:warehouse_subul/features/get_shipment_in_process/domain/use_case/get_shipments_in_process_use_case/get_shipments_in_process_use_case.dart';
+import 'package:warehouse_subul/features/get_shipment_in_process/presentation/manager/get_shipments_in_process_cubit/get_shipment_in_proccess_cubit.dart';
+import 'package:warehouse_subul/features/get_shipment_in_process/presentation/views/show_shipments_in_process_screen.dart';
+import 'package:warehouse_subul/features/warehouse_manager/show_all_shipments.dart';
 
 class WarehouseManager extends StatefulWidget {
   const WarehouseManager({super.key});
@@ -79,8 +83,10 @@ class _WarehouseManagerState extends State<WarehouseManager> {
                             CustomIconOfSideBar(
                               icon: Icons.local_shipping,
                               color: AppColors.white,
-                              onTap: () {},
-                              isSelected: false,
+                              onTap: () {
+                                onButtonTap(1);
+                              },
+                              isSelected: selectedButtonIndex == 1,
                             ),
                             SizedBox(height: size.height / 10),
                             CustomIconOfSideBar(
@@ -106,10 +112,24 @@ class _WarehouseManagerState extends State<WarehouseManager> {
                               (context) =>
                                   GetUsersCubit(sl.get<GetUserUseCase>()),
                         ),
-                        BlocProvider(create: (context) => GetCountriesCubit(sl.get<GetCountriesUseCase>())),
-                        BlocProvider(create: (context) => CreateShipmentCubit(sl.get<CreateShipmentUseCase>())),
+                        BlocProvider(
+                          create:
+                              (context) => GetCountriesCubit(
+                                sl.get<GetCountriesUseCase>(),
+                              ),
+                        ),
+                        BlocProvider(
+                          create:
+                              (context) => CreateShipmentCubit(
+                                sl.get<CreateShipmentUseCase>(),
+                              ),
+                        ),
                       ],
                       child: AddShipmentForm(),
+                    ),
+                    BlocProvider(
+                      create: (context) => GetShipmentInProccessCubit(sl.get<GetShipmentsInProcessUseCase>())..getShipments(),
+                      child: ShowShipmentsInProcessScreen(),
                     ),
                     // EditReceivingShipmentsTable(
                     //   widget: CustomOkButton(

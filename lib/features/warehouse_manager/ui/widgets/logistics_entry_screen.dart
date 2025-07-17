@@ -1,6 +1,6 @@
 
 import 'package:flutter/material.dart';
-import 'package:warehouse_subul/features/warehouse_manager/ui/widgets/shipments_info_card.dart';
+import 'package:warehouse_subul/features/get_shipment_in_process/presentation/views/widgets/shipments_info_card.dart';
 import 'package:warehouse_subul/features/warehouse_manager/ui/widgets/upload_number_image_and_name_of_driver_shipment.dart';
 import 'package:warehouse_subul/features/warehouse_manager/ui/widgets/volumetric_weight_calculation.dart';
 

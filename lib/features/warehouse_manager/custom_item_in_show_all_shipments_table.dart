@@ -1,14 +1,13 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:warehouse_subul/core/helpers/constants.dart';
 import 'package:warehouse_subul/core/helpers/styles.dart';
 import 'package:warehouse_subul/core/theming/app_colors.dart';
+import 'package:warehouse_subul/features/get_shipment_in_process/domain/entities/shipment_in_process_entity/shipment_in_process_entity.dart';
 
 class CustomItemInShowAllShipmentsTable extends StatelessWidget {
-  const CustomItemInShowAllShipmentsTable({
-    super.key,
-  });
+ 
+  const CustomItemInShowAllShipmentsTable({super.key,});
 
   @override
   Widget build(BuildContext context) {
