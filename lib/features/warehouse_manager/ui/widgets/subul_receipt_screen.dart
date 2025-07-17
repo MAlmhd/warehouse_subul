@@ -7,7 +7,7 @@ import 'package:warehouse_subul/core/helpers/constants.dart';
 import 'package:warehouse_subul/core/helpers/styles.dart';
 import 'package:warehouse_subul/core/theming/app_colors.dart';
 import 'package:warehouse_subul/features/warehouse_manager/ui/widgets/shipment_receipt.dart';
-import 'package:warehouse_subul/features/warehouse_manager/ui/widgets/upload_number_image_and_name_of_driver_shipment.dart';
+import 'package:warehouse_subul/features/get_shipment_in_process/presentation/views/widgets/upload_number_image_and_name_of_driver_shipment.dart';
 import 'package:warehouse_subul/features/warehouse_manager/ui/widgets/volumetric_weight_calculation.dart';
 
 class SubulReceiptScreen extends StatelessWidget {
