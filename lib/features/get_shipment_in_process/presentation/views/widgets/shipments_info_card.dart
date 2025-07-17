@@ -9,12 +9,17 @@ import 'package:warehouse_subul/core/theming/app_colors.dart';
 import 'package:warehouse_subul/core/utils/service_locator.dart';
 import 'package:warehouse_subul/features/get_shipment_in_process/domain/entities/shipment_in_process_entity/shipment_in_process_entity.dart';
 import 'package:warehouse_subul/features/get_shipment_in_process/domain/use_case/get_drivers_use_case/get_drivers_use_case.dart';
+import 'package:warehouse_subul/features/get_shipment_in_process/domain/use_case/get_shipment_details_use_case/get_shipment_details_use_case.dart';
 import 'package:warehouse_subul/features/get_shipment_in_process/domain/use_case/update_shipment_destenation_country_use_case/update_shipment_destenation_country_use_case.dart';
+import 'package:warehouse_subul/features/get_shipment_in_process/domain/use_case/update_shipment_for_delivery_use_case/update_shipment_for_delivery_use_case.dart';
 import 'package:warehouse_subul/features/get_shipment_in_process/domain/use_case/update_shipment_origin_country_use_case/update_shipment_origin_use_case.dart';
 import 'package:warehouse_subul/features/get_shipment_in_process/presentation/manager/get_drivers_cubit/get_drivers_cubit.dart';
+import 'package:warehouse_subul/features/get_shipment_in_process/presentation/manager/get_shipment_details/get_shipment_details_cubit.dart';
 import 'package:warehouse_subul/features/get_shipment_in_process/presentation/manager/update_shipment_destenation_country_cubit/update_shipment_destenation_country_cubit.dart';
+import 'package:warehouse_subul/features/get_shipment_in_process/presentation/manager/update_shipment_for_delivery_cubit/update_shipment_for_delivery_cubit.dart';
 import 'package:warehouse_subul/features/get_shipment_in_process/presentation/manager/update_shipment_origin_country_cubit/update_shipment_origin_country_cubit.dart';
 import 'package:warehouse_subul/features/get_shipment_in_process/presentation/views/widgets/country_switch_container.dart';
+import 'package:warehouse_subul/features/get_shipment_in_process/presentation/views/widgets/shipment_receipt.dart';
 import 'package:warehouse_subul/features/get_shipment_in_process/presentation/views/widgets/upload_number_image_and_name_of_driver_shipment.dart';
 
 class ShipmentInfoCard extends StatelessWidget {
@@ -36,9 +41,24 @@ class ShipmentInfoCard extends StatelessWidget {
                   borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
                 ),
                 builder:
-                    (_) => BlocProvider(
-                      create: (context) => GetDriversCubit(sl.get<GetDriversUseCase>())..getDrivers(),
-                      child: const UploadNumberImageAndNameOfDriverShipment(),
+                    (_) => MultiBlocProvider(
+                      providers: [
+                        BlocProvider(
+                          create:
+                              (context) =>
+                                  GetDriversCubit(sl.get<GetDriversUseCase>())
+                                    ..getDrivers(),
+                        ),
+                        BlocProvider(
+                          create:
+                              (context) => UpdateShipmentForDeliveryCubit(
+                                sl.get<UpdateShipmentForDeliveryUseCase>(),
+                              ),
+                        ),
+                      ],
+                      child: UploadNumberImageAndNameOfDriverShipment(
+                        shipmentId: shipment!.id,
+                      ),
                     ),
               );
             },
@@ -86,6 +106,37 @@ class ShipmentInfoCard extends StatelessWidget {
                         _buildLine(
                           'تاريخ الشحن:',
                           _formatDate(shipment!.dateOfShipment),
+                        ),
+                        Align(
+                          alignment: Alignment.centerLeft,
+                          child: TextButton.icon(
+                            onPressed: () {
+                              showModalBottomSheet(
+                                context: context,
+                                shape: const RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.vertical(
+                                    top: Radius.circular(20),
+                                  ),
+                                ),
+                                builder: (_) {
+                                  return BlocProvider(
+                                    create: (context) => GetShipmentDetailsCubit(sl.get<GetShipmentDetailsUseCase>())..getShipmentDetails(idShipment: shipment!.id),
+                                    child: ShipmentReceipt(),
+                                  );
+                                },
+                              );
+                            },
+                            icon: const Icon(
+                              Icons.visibility,
+                              color: AppColors.deepPurple,
+                            ),
+                            label: Text(
+                              "عرض التفاصيل",
+                              style: Styles.textStyle4Sp.copyWith(
+                                color: AppColors.deepPurple,
+                              ),
+                            ),
+                          ),
                         ),
                       ],
                     ),

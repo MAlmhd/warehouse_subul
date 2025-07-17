@@ -5,9 +5,14 @@ import 'package:warehouse_subul/core/helpers/styles.dart';
 import 'package:warehouse_subul/core/theming/app_colors.dart';
 
 class CardTextField extends StatelessWidget {
-  const CardTextField({super.key, required this.svgPicture, required this.hintText});
+  const CardTextField({
+    super.key,
+    required this.svgPicture,
+    required this.hintText, required this.controller,
+  });
   final SvgPicture svgPicture;
   final String hintText;
+  final TextEditingController controller;
 
   @override
   Widget build(BuildContext context) {
@@ -33,8 +38,11 @@ class CardTextField extends StatelessWidget {
           SizedBox(
             width: 55.w,
             child: TextField(
+              controller: controller,
+              
               textDirection: TextDirection.rtl,
               decoration: InputDecoration(
+                
                 border: InputBorder.none,
                 hintTextDirection: TextDirection.rtl,
                 hintText: hintText,
@@ -46,7 +54,7 @@ class CardTextField extends StatelessWidget {
             ),
           ),
           SizedBox(width: size.width / 100),
-          Flexible(child:svgPicture),
+          Flexible(child: svgPicture),
         ],
       ),
     );
