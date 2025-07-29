@@ -1,0 +1,58 @@
+import 'package:dartz/dartz.dart';
+import 'package:dio/dio.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:warehouse_subul/core/errors/failure.dart';
+import 'package:warehouse_subul/features/get_all_parcels/data/data_source/create_parcel_data_source/create_parcel_remote_data_source.dart';
+import 'package:warehouse_subul/features/get_all_parcels/domain/entities/create_parcel_entity/create_parcel_entity.dart';
+import 'package:warehouse_subul/features/get_all_parcels/domain/repos/create_parcel_repo/create_parcel_repo.dart';
+
+class CreateParcelRepoImpl implements CreateParcelRepo {
+  final CreateParcelRemoteDataSource createParcelRemoteDataSource;
+
+  CreateParcelRepoImpl(this.createParcelRemoteDataSource);
+  @override
+  Future<Either<Failure, CreateParcelEntity>> createParcel({
+    required int id,
+    required String actualWeight,
+    required String specialActualWeight,
+    required String normalActualWeight,
+    required String specialDimensionalWeight,
+    required String normalDimensionalWeight,
+    required String length,
+    required String width,
+    required String height,
+    required String brandType,
+    required String isFragile,
+    required String needsRepacking,
+    required String notes,
+    required String printNotes,
+    required XFile scalePhotoUpload,
+  }) async {
+    try {
+      var data = await createParcelRemoteDataSource.createParcel(
+        id: id,
+        actualWeight: actualWeight,
+        specialActualWeight: specialActualWeight,
+        normalActualWeight: normalActualWeight,
+        specialDimensionalWeight: specialDimensionalWeight,
+        normalDimensionalWeight: normalDimensionalWeight,
+        length: length,
+        width: width,
+        height: height,
+        brandType: brandType,
+        isFragile: isFragile,
+        needsRepacking: needsRepacking,
+        notes: notes,
+        printNotes: printNotes,
+        scalePhotoUpload: scalePhotoUpload,
+      );
+      return right(data);
+    } catch (e) {
+      if (e is DioException) {
+        return left(ServerFailure.fromDioError(e));
+      } else {
+        return left(ServerFailure(e.toString()));
+      }
+    }
+  }
+}

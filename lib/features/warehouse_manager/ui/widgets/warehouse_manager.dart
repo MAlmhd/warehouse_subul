@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:warehouse_subul/core/helpers/assets_data.dart';
+import 'package:warehouse_subul/core/helpers/extensions.dart';
+import 'package:warehouse_subul/core/routing/routes.dart';
 import 'package:warehouse_subul/core/theming/app_colors.dart';
 import 'package:warehouse_subul/core/utils/service_locator.dart';
 import 'package:warehouse_subul/core/widgets/custom_icon_of_side_bar.dart';
@@ -13,10 +15,12 @@ import 'package:warehouse_subul/features/create_shipment/presentation/manager/cr
 import 'package:warehouse_subul/features/create_shipment/presentation/manager/get_countries_cubit/get_countries_cubit.dart';
 import 'package:warehouse_subul/features/create_shipment/presentation/manager/get_users_cubit/get_users_cubit.dart';
 import 'package:warehouse_subul/features/create_shipment/presentation/views/add_shipment_form.dart';
+import 'package:warehouse_subul/features/get_all_parcels/domain/use_case/get_all_parcels_use_case/get_all_parcels_use_case.dart';
+import 'package:warehouse_subul/features/get_all_parcels/presentation/manager/get_all_parcels_cubit/get_all_parcels_cubit.dart';
+import 'package:warehouse_subul/features/get_all_parcels/presentation/views/show_all_parcels.dart';
 import 'package:warehouse_subul/features/get_shipment_in_process/domain/use_case/get_shipments_in_process_use_case/get_shipments_in_process_use_case.dart';
 import 'package:warehouse_subul/features/get_shipment_in_process/presentation/manager/get_shipments_in_process_cubit/get_shipment_in_proccess_cubit.dart';
 import 'package:warehouse_subul/features/get_shipment_in_process/presentation/views/show_shipments_in_process_screen.dart';
-import 'package:warehouse_subul/features/warehouse_manager/show_all_shipments.dart';
 
 class WarehouseManager extends StatefulWidget {
   const WarehouseManager({super.key});
@@ -91,8 +95,10 @@ class _WarehouseManagerState extends State<WarehouseManager> {
                             SizedBox(height: size.height / 10),
                             CustomIconOfSideBar(
                               image: AssetsData.boxShipmmentIcon,
-                              onTap: () {},
-                              isSelected: false,
+                              onTap: () {
+                                onButtonTap(2);
+                              },
+                              isSelected: selectedButtonIndex == 2,
                             ),
                           ],
                         ),
@@ -128,8 +134,18 @@ class _WarehouseManagerState extends State<WarehouseManager> {
                       child: AddShipmentForm(),
                     ),
                     BlocProvider(
-                      create: (context) => GetShipmentInProccessCubit(sl.get<GetShipmentsInProcessUseCase>())..getShipments(),
+                      create:
+                          (context) => GetShipmentInProccessCubit(
+                            sl.get<GetShipmentsInProcessUseCase>(),
+                          )..getShipments(),
                       child: ShowShipmentsInProcessScreen(),
+                    ),
+                    BlocProvider(
+                      create:
+                          (context) =>
+                              GetAllParcelsCubit(sl.get<GetAllParcelsUseCase>())
+                                ..getAllParcels(),
+                      child: ShowAllParcels(),
                     ),
                     // EditReceivingShipmentsTable(
                     //   widget: CustomOkButton(

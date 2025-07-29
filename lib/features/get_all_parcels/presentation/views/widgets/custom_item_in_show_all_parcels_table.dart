@@ -3,11 +3,24 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:warehouse_subul/core/helpers/constants.dart';
 import 'package:warehouse_subul/core/helpers/styles.dart';
 import 'package:warehouse_subul/core/theming/app_colors.dart';
-import 'package:warehouse_subul/features/get_shipment_in_process/domain/entities/shipment_in_process_entity/shipment_in_process_entity.dart';
 
 class CustomItemInShowAllShipmentsTable extends StatelessWidget {
- 
-  const CustomItemInShowAllShipmentsTable({super.key,});
+  final int id;
+  final int shipmentId;
+  final String actualWeight;
+  final String specialActualWeight;
+  final String normalActualWeight;
+  final String? specialDimensionalWeight;
+  final String? normalDimensionalWeight;
+  final String length;
+  final String width;
+  final String height;
+  final String calculatedDimensionalWeight;
+  final String calculatedFinalWeight;
+  final int customerId;
+  final String firstName;
+  final String lastName;
+  const CustomItemInShowAllShipmentsTable({super.key, required this.id, required this.shipmentId, required this.actualWeight, required this.specialActualWeight, required this.normalActualWeight, this.specialDimensionalWeight, this.normalDimensionalWeight, required this.length, required this.width, required this.height, required this.calculatedDimensionalWeight, required this.calculatedFinalWeight, required this.customerId, required this.firstName, required this.lastName});
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +47,7 @@ class CustomItemInShowAllShipmentsTable extends StatelessWidget {
           SizedBox(
             width: 20.w,
             child: Text(
-              '4',
+              width,
               textAlign: TextAlign.center,
               style: Styles.textStyle5Sp,
               maxLines: 1,
@@ -44,7 +57,7 @@ class CustomItemInShowAllShipmentsTable extends StatelessWidget {
           SizedBox(
             width: 20.w,
             child: Text(
-              '4',
+              length,
               textAlign: TextAlign.center,
               style: Styles.textStyle5Sp,
               maxLines: 1,
@@ -54,7 +67,7 @@ class CustomItemInShowAllShipmentsTable extends StatelessWidget {
           SizedBox(
             width: 20.w,
             child: Text(
-              '4',
+              height,
               textAlign: TextAlign.center,
               style: Styles.textStyle5Sp,
               maxLines: 1,
@@ -64,7 +77,7 @@ class CustomItemInShowAllShipmentsTable extends StatelessWidget {
           SizedBox(
             width: 40.w,
             child: Text(
-              '4',
+              normalDimensionalWeight.toString(),
               textAlign: TextAlign.center,
               style: Styles.textStyle5Sp,
               maxLines: 1,
@@ -74,7 +87,7 @@ class CustomItemInShowAllShipmentsTable extends StatelessWidget {
           SizedBox(
             width: 40.w,
             child: Text(
-              '4',
+              specialDimensionalWeight.toString(),
               textAlign: TextAlign.center,
               style: Styles.textStyle5Sp,
               maxLines: 1,
@@ -84,7 +97,7 @@ class CustomItemInShowAllShipmentsTable extends StatelessWidget {
           SizedBox(
             width: 40.w,
             child: Text(
-              '4',
+              normalActualWeight,
               textAlign: TextAlign.center,
               style: Styles.textStyle5Sp,
               maxLines: 1,
@@ -94,7 +107,7 @@ class CustomItemInShowAllShipmentsTable extends StatelessWidget {
           SizedBox(
             width: 40.w,
             child: Text(
-              '4',
+              specialActualWeight,
               textAlign: TextAlign.center,
               style: Styles.textStyle5Sp,
               maxLines: 1,
@@ -104,7 +117,7 @@ class CustomItemInShowAllShipmentsTable extends StatelessWidget {
           SizedBox(
             width: 40.w,
             child: Text(
-              '4',
+              actualWeight,
               textAlign: TextAlign.center,
               style: Styles.textStyle5Sp,
               maxLines: 1,
@@ -124,7 +137,7 @@ class CustomItemInShowAllShipmentsTable extends StatelessWidget {
           SizedBox(
             width: 40.w,
             child: Text(
-              '4',
+              '$firstName $lastName',
               textAlign: TextAlign.center,
               style: Styles.textStyle5Sp,
               maxLines: 1,

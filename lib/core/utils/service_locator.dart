@@ -15,26 +15,34 @@ import 'package:warehouse_subul/features/create_shipment/domain/repos/get_users_
 import 'package:warehouse_subul/features/create_shipment/domain/use_case/create_shipment_use_case/create_shipment_use_case.dart';
 import 'package:warehouse_subul/features/create_shipment/domain/use_case/get_countries_use_case/get_countries_use_case.dart';
 import 'package:warehouse_subul/features/create_shipment/domain/use_case/get_users_use_case/get_user_use_case.dart';
+import 'package:warehouse_subul/features/get_all_parcels/data/data_source/get_all_parcels_data_source/get_all_parcels_remote_data_source.dart';
+import 'package:warehouse_subul/features/get_all_parcels/data/repos/get_all_parcels_repo_impl/get_all_parcels_repo_impl.dart';
+import 'package:warehouse_subul/features/get_all_parcels/domain/repos/get_all_parcels_repo/get_all_parcels_repo.dart';
+import 'package:warehouse_subul/features/get_all_parcels/domain/use_case/get_all_parcels_use_case/get_all_parcels_use_case.dart';
 import 'package:warehouse_subul/features/get_shipment_in_process/data/data_source/get_drivers_data_source/get_drivers_remote_data_source.dart';
 import 'package:warehouse_subul/features/get_shipment_in_process/data/data_source/get_shipment_details_data_source/get_shipment_details_remote_data_source.dart';
+import 'package:warehouse_subul/features/get_shipment_in_process/data/data_source/get_shipment_parcels_data_source/get_shipment_parcels_remote_data_source.dart';
 import 'package:warehouse_subul/features/get_shipment_in_process/data/data_source/get_shipments_in_process_data_source/get_shipment_in_process_remote_data_source.dart';
 import 'package:warehouse_subul/features/get_shipment_in_process/data/data_source/update_shipment_destenation_data_source/update_shipment_destenation_remote_date_source.dart';
 import 'package:warehouse_subul/features/get_shipment_in_process/data/data_source/update_shipment_for_delivery_data_source/update_shipment_for_delivery_remote_data_source.dart';
 import 'package:warehouse_subul/features/get_shipment_in_process/data/data_source/update_shipment_origin_country_data_source/update_shipment_origin_country_remote_data_source.dart';
 import 'package:warehouse_subul/features/get_shipment_in_process/data/repos/get_drivers_repo_impl/get_drivers_repo_impl.dart';
 import 'package:warehouse_subul/features/get_shipment_in_process/data/repos/get_shipment_details_repo_impl/get_shipment_details_repo_impl.dart';
+import 'package:warehouse_subul/features/get_shipment_in_process/data/repos/get_shipment_parcels_repo_impl/get_shipment_parcels_repo_impl.dart';
 import 'package:warehouse_subul/features/get_shipment_in_process/data/repos/get_shipments_in_process_repo_impl/get_shipments_in_process_repo_impl.dart';
 import 'package:warehouse_subul/features/get_shipment_in_process/data/repos/update_shipment_destenation_repo_impl/update_shipment_destenation_repo_impl.dart';
 import 'package:warehouse_subul/features/get_shipment_in_process/data/repos/update_shipment_for_delivery_repo_impl/update_shipment_for_delivery_repo_impl.dart';
 import 'package:warehouse_subul/features/get_shipment_in_process/data/repos/update_shipment_origin_country_repo_impl/update_shipment_origin_country_repo_impl.dart';
 import 'package:warehouse_subul/features/get_shipment_in_process/domain/repos/get_drivers_repo/get_drivers_repo.dart';
 import 'package:warehouse_subul/features/get_shipment_in_process/domain/repos/get_shipment_details_repo/get_shipment_details_repo.dart';
+import 'package:warehouse_subul/features/get_shipment_in_process/domain/repos/get_shipment_parcels_repo/get_shipment_parcels_repo.dart';
 import 'package:warehouse_subul/features/get_shipment_in_process/domain/repos/get_shipments_in_process_repo/get_shipments_in_process_repo.dart';
 import 'package:warehouse_subul/features/get_shipment_in_process/domain/repos/update_shipment_destenation_country_repo/update_shipment_destenation_country_repo.dart';
 import 'package:warehouse_subul/features/get_shipment_in_process/domain/repos/update_shipment_for_delivery_repo/update_shipment_for_delivery_repo.dart';
 import 'package:warehouse_subul/features/get_shipment_in_process/domain/repos/update_shipment_origin_country_repo/update_shipment_origin_country_repo.dart';
 import 'package:warehouse_subul/features/get_shipment_in_process/domain/use_case/get_drivers_use_case/get_drivers_use_case.dart';
 import 'package:warehouse_subul/features/get_shipment_in_process/domain/use_case/get_shipment_details_use_case/get_shipment_details_use_case.dart';
+import 'package:warehouse_subul/features/get_shipment_in_process/domain/use_case/get_shipment_parcels_use_case/get_shipment_parcels_use_case.dart';
 import 'package:warehouse_subul/features/get_shipment_in_process/domain/use_case/get_shipments_in_process_use_case/get_shipments_in_process_use_case.dart';
 import 'package:warehouse_subul/features/get_shipment_in_process/domain/use_case/update_shipment_destenation_country_use_case/update_shipment_destenation_country_use_case.dart';
 import 'package:warehouse_subul/features/get_shipment_in_process/domain/use_case/update_shipment_for_delivery_use_case/update_shipment_for_delivery_use_case.dart';
@@ -169,4 +177,31 @@ void setupServiceLocator() {
     () => GetShipmentDetailsUseCase(sl.get<GetShipmentDetailsRepo>()),
   );
 
+
+
+// get all parcels
+    sl.registerLazySingleton<GetAllParcelsRemoteDataSource>(
+    ()=> GetAllParcelsRemoteDataSourceImpl(sl.get<ApiService>())
+  );
+  sl.registerLazySingleton<GetAllParcelsRepo>(
+    ()=> GetAllParcelsRepoImpl
+    (sl.get<GetAllParcelsRemoteDataSource>())
+  );
+  sl.registerLazySingleton<GetAllParcelsUseCase>(
+    () => GetAllParcelsUseCase(sl.get<GetAllParcelsRepo>()),
+  );
+
+  // get shipment parcels
+    sl.registerLazySingleton<GetShipmentParcelsRemoteDataSource>(
+    ()=> GetShipmentParcelsRemoteDataSourceImpl(sl.get<ApiService>())
+  );
+  sl.registerLazySingleton<GetShipmentParcelsRepo>(
+  () => GetShipmentParcelsRepoImpl(
+    sl.get<GetShipmentParcelsRemoteDataSource>() 
+  ),
+);
+
+  sl.registerLazySingleton<GetShipmentParcelsUseCase>(
+    () => GetShipmentParcelsUseCase(sl.get<GetShipmentParcelsRepo>()),
+  );
 }
