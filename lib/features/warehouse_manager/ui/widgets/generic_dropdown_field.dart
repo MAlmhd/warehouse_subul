@@ -30,7 +30,7 @@ class GenericDropdownField<T> extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: 140.w,
-      height: 60.h,
+      height: 50.h,
       padding: EdgeInsets.symmetric(horizontal: 8.w),
       decoration: BoxDecoration(
         color: AppColors.goldenYellow,

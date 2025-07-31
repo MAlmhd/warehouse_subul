@@ -11,13 +11,15 @@ class CustomSwitchLabel extends StatelessWidget {
     required this.textColor,
     required this.activeColor,
     required this.disableColor,
-    required this.isActive,
+    required this.isActive, this.onChanged,
   });
   final String label;
   final Color textColor;
   final Color activeColor;
   final Color disableColor;
   final bool isActive;
+  final void Function(bool)? onChanged;
+
 
   @override
   Widget build(BuildContext context) {
@@ -40,6 +42,7 @@ class CustomSwitchLabel extends StatelessWidget {
           child: FlutterSwitch(
             width: 40.0,
             height: 23.0,
+            
             toggleSize:
                 18.0, // slightly larger to match the white circle in image
             value: isActive,
@@ -48,7 +51,7 @@ class CustomSwitchLabel extends StatelessWidget {
             activeColor: activeColor,
             inactiveColor: disableColor,
             toggleColor: AppColors.white,
-            onToggle: (val) {},
+            onToggle: (val) => onChanged?.call(val),
           ),
         ),
       ],

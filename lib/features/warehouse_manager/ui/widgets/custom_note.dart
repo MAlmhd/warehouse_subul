@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:warehouse_subul/core/helpers/constants.dart';
@@ -6,8 +5,9 @@ import 'package:warehouse_subul/core/helpers/styles.dart';
 import 'package:warehouse_subul/core/theming/app_colors.dart';
 
 class CustomNote extends StatelessWidget {
-  const CustomNote({super.key, required this.label});
+  const CustomNote({super.key, required this.label, required this.controller});
   final String label;
+  final TextEditingController controller;
 
   @override
   Widget build(BuildContext context) {
@@ -24,6 +24,7 @@ class CustomNote extends StatelessWidget {
           ),
           child: TextField(
             textAlign: TextAlign.end,
+            controller: controller,
             decoration: InputDecoration(border: InputBorder.none),
             maxLines: 4,
           ),

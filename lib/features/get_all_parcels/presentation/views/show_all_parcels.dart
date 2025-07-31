@@ -9,7 +9,7 @@ import 'package:warehouse_subul/core/widgets/custom_progress_indicator.dart';
 import 'package:warehouse_subul/core/widgets/custom_search_item.dart';
 import 'package:warehouse_subul/core/widgets/text_logo.dart';
 import 'package:warehouse_subul/features/get_all_parcels/presentation/manager/get_all_parcels_cubit/get_all_parcels_cubit.dart';
-import 'package:warehouse_subul/features/get_all_parcels/presentation/views/widgets/custom_item_in_show_all_parcels_table.dart';
+import 'package:warehouse_subul/features/get_shipment_in_process/presentation/views/widgets/custom_item_in_show_all_parcels_table.dart';
 import 'package:warehouse_subul/features/warehouse_manager/ui/widgets/name_of_columns_in_show_all_shipments_table.dart';
 
 class ShowAllParcels extends StatelessWidget {

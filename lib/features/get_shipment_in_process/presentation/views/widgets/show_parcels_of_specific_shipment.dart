@@ -8,7 +8,7 @@ import 'package:warehouse_subul/core/utils/functions/show_snack_bar.dart';
 import 'package:warehouse_subul/core/utils/service_locator.dart';
 import 'package:warehouse_subul/core/widgets/custom_progress_indicator.dart';
 import 'package:warehouse_subul/core/widgets/custom_search_item.dart';
-import 'package:warehouse_subul/features/get_all_parcels/presentation/views/widgets/custom_item_in_show_all_parcels_table.dart';
+import 'package:warehouse_subul/features/get_shipment_in_process/presentation/views/widgets/custom_item_in_show_all_parcels_table.dart';
 import 'package:warehouse_subul/features/get_shipment_in_process/domain/use_case/get_shipment_parcels_use_case/get_shipment_parcels_use_case.dart';
 import 'package:warehouse_subul/features/get_shipment_in_process/presentation/manager/get_shipment_parcels_cubit/get_shipment_parcels_cubit.dart';
 import 'package:warehouse_subul/features/warehouse_manager/ui/widgets/name_of_columns_in_show_all_shipments_table.dart';
@@ -21,6 +21,7 @@ class ShowParcelsOfSpecificShipment extends StatelessWidget {
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     return Scaffold(
+      appBar: AppBar(backgroundColor: AppColors.grey,),
       body: BlocProvider(
         create:
             (context) =>
@@ -63,12 +64,12 @@ class ShowParcelsOfSpecificShipment extends StatelessWidget {
                               overflow: TextOverflow.clip,
                             ),
                           ),
-                          CustomSearchItem(
-                            backgoundColor: AppColors.white,
-                            hintText: 'فلترة من خلال',
-                            icon: Icon(Icons.tune, color: AppColors.white),
-                            textColor: AppColors.black,
-                          ),
+                          // CustomSearchItem(
+                          //   backgoundColor: AppColors.white,
+                          //   hintText: 'فلترة من خلال',
+                          //   icon: Icon(Icons.tune, color: AppColors.white),
+                          //   textColor: AppColors.black,
+                          // ),
                         ],
                       ),
                     ),
@@ -131,62 +132,62 @@ class ShowParcelsOfSpecificShipment extends StatelessWidget {
                       },
                     ),
                   ),
-                  SizedBox(height: size.height / 50),
-                  Padding(
-                    padding: EdgeInsets.only(right: 15.w),
-                    child: SizedBox(
-                      width: 40.w,
-                      child: Text(
-                        ':القيمة الإجمالية',
-                        textAlign: TextAlign.center,
-                        style: Styles.textStyle5Sp,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.symmetric(
-                      horizontal: 15.w,
-                      vertical: 20.h,
-                    ),
+                  // SizedBox(height: size.height / 50),
+                  // Padding(
+                  //   padding: EdgeInsets.only(right: 15.w),
+                  //   child: SizedBox(
+                  //     width: 40.w,
+                  //     child: Text(
+                  //       ':القيمة الإجمالية',
+                  //       textAlign: TextAlign.center,
+                  //       style: Styles.textStyle5Sp,
+                  //       maxLines: 1,
+                  //       overflow: TextOverflow.ellipsis,
+                  //     ),
+                  //   ),
+                  // ),
+                  // Padding(
+                  //   padding: EdgeInsets.symmetric(
+                  //     horizontal: 15.w,
+                  //     vertical: 20.h,
+                  //   ),
 
-                    child: SizedBox(
-                      width: 125.w,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Container(
-                            width: 40.w,
-                            height: 55.h,
-                            padding: EdgeInsets.symmetric(
-                              horizontal: 8.w,
-                              vertical: 10.h,
-                            ),
-                            decoration: BoxDecoration(
-                              color: AppColors.goldenYellow,
-                              borderRadius: BorderRadius.circular(cornerRadius),
-                            ),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text('إنشاء طرد', style: Styles.textStyle3Sp),
-                                Icon(Icons.add, color: AppColors.white),
-                              ],
-                            ),
-                          ),
-                          Container(
-                            width: 80.w,
-                            height: 55.h,
-                            decoration: BoxDecoration(
-                              color: AppColors.goldenYellow,
-                              borderRadius: BorderRadius.circular(cornerRadius),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
+                  //   child: SizedBox(
+                  //     width: 125.w,
+                  //     child: Row(
+                  //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  //       children: [
+                  //         Container(
+                  //           width: 40.w,
+                  //           height: 55.h,
+                  //           padding: EdgeInsets.symmetric(
+                  //             horizontal: 8.w,
+                  //             vertical: 10.h,
+                  //           ),
+                  //           decoration: BoxDecoration(
+                  //             color: AppColors.goldenYellow,
+                  //             borderRadius: BorderRadius.circular(cornerRadius),
+                  //           ),
+                  //           child: Row(
+                  //             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  //             children: [
+                  //               Text('إنشاء طرد', style: Styles.textStyle3Sp),
+                  //               Icon(Icons.add, color: AppColors.white),
+                  //             ],
+                  //           ),
+                  //         ),
+                  //         Container(
+                  //           width: 80.w,
+                  //           height: 55.h,
+                  //           decoration: BoxDecoration(
+                  //             color: AppColors.goldenYellow,
+                  //             borderRadius: BorderRadius.circular(cornerRadius),
+                  //           ),
+                  //         ),
+                  //       ],
+                  //     ),
+                  //   ),
+                  // ),
                 ],
               ),
             ),

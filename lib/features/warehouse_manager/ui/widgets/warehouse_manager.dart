@@ -80,7 +80,9 @@ class _WarehouseManagerState extends State<WarehouseManager> {
                             CustomIconOfSideBar(
                               icon: Icons.add,
                               color: AppColors.white,
-                              onTap: () {},
+                              onTap: () {
+                                onButtonTap(0);
+                              },
                               isSelected: selectedButtonIndex == 0,
                             ),
                             SizedBox(height: size.height / 10),

@@ -6,10 +6,19 @@ import 'package:warehouse_subul/core/helpers/constants.dart';
 import 'package:warehouse_subul/core/helpers/styles.dart';
 import 'package:warehouse_subul/core/theming/app_colors.dart';
 
-class LableledRemoveAddShipmentWidget extends StatelessWidget {
-  const LableledRemoveAddShipmentWidget({super.key, required this.label});
+class LableledRemoveAddShipmentWidget extends StatefulWidget {
+  const LableledRemoveAddShipmentWidget({super.key, required this.label, required this.onChanged});
   final String label;
+  final ValueChanged<int> onChanged;
 
+  @override
+  State<LableledRemoveAddShipmentWidget> createState() =>
+      _LableledRemoveAddShipmentWidgetState();
+}
+
+class _LableledRemoveAddShipmentWidgetState
+    extends State<LableledRemoveAddShipmentWidget> {
+  int number = 0;
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -20,7 +29,7 @@ class LableledRemoveAddShipmentWidget extends StatelessWidget {
           children: [
             Flexible(
               child: Text(
-                label,
+                widget.label,
                 style: Styles.textStyle4Sp,
                 overflow: TextOverflow.clip,
                 textDirection: TextDirection.rtl,
@@ -43,16 +52,28 @@ class LableledRemoveAddShipmentWidget extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Flexible(
-                child: CircleAvatar(
-                  maxRadius: 4.w,
-                  backgroundColor: AppColors.deepPurple,
-                  child: Icon(Icons.remove, color: AppColors.white),
+                child: MouseRegion(
+                  cursor: SystemMouseCursors.click,
+                  child: GestureDetector(
+                    onTap: () {
+                      if (number == 0) return;
+                      setState(() {
+                        number--;
+                      });
+                      widget.onChanged(number);
+                    },
+                    child: CircleAvatar(
+                      maxRadius: 4.w,
+                      backgroundColor: AppColors.deepPurple,
+                      child: Icon(Icons.remove, color: AppColors.white),
+                    ),
+                  ),
                 ),
               ),
               SizedBox(width: size.width / 100),
               Flexible(
                 child: Text(
-                  "1",
+                  "$number",
                   style: Styles.textStyle5Sp.copyWith(
                     color: AppColors.deepPurple,
                   ),
@@ -60,10 +81,21 @@ class LableledRemoveAddShipmentWidget extends StatelessWidget {
               ),
               SizedBox(width: size.width / 100),
               Flexible(
-                child: CircleAvatar(
-                  maxRadius: 4.w,
-                  backgroundColor: AppColors.deepPurple,
-                  child: Icon(Icons.add, color: AppColors.white),
+                child: MouseRegion(
+                  cursor: SystemMouseCursors.click,
+                  child: GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        number++;
+                      });
+                      widget.onChanged(number);
+                    },
+                    child: CircleAvatar(
+                      maxRadius: 4.w,
+                      backgroundColor: AppColors.deepPurple,
+                      child: Icon(Icons.add, color: AppColors.white),
+                    ),
+                  ),
                 ),
               ),
             ],

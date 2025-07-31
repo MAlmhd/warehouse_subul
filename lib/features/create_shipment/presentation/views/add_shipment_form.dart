@@ -9,14 +9,15 @@ import 'package:warehouse_subul/core/helpers/styles.dart';
 import 'package:warehouse_subul/core/theming/app_colors.dart';
 import 'package:warehouse_subul/core/utils/functions/show_snack_bar.dart';
 import 'package:warehouse_subul/core/widgets/custom_input_field.dart';
+import 'package:warehouse_subul/core/widgets/custom_progress_indicator.dart';
 import 'package:warehouse_subul/features/create_shipment/domain/entities/country_entity/country_entity.dart';
 import 'package:warehouse_subul/features/create_shipment/domain/entities/user_entity/user_entity.dart';
 import 'package:warehouse_subul/features/create_shipment/presentation/manager/create_shipment_cubit/create_shipment_cubit.dart';
 import 'package:warehouse_subul/features/create_shipment/presentation/manager/get_countries_cubit/get_countries_cubit.dart';
 import 'package:warehouse_subul/features/create_shipment/presentation/manager/get_users_cubit/get_users_cubit.dart';
-import 'package:warehouse_subul/features/warehouse_manager/ui/widgets/create_shipment.dart';
 import 'package:warehouse_subul/features/warehouse_manager/ui/widgets/generic_dropdown_field.dart';
 import 'package:warehouse_subul/features/warehouse_manager/ui/widgets/tracking_number_card.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class AddShipmentForm extends StatefulWidget {
   const AddShipmentForm({super.key});
@@ -166,7 +167,7 @@ class _AddShipmentFormState extends State<AddShipmentForm> {
           CustomInputField(
             controller: supplierNumberController,
             hintText: 'رقم المزود',
-            svgPicture: SvgPicture.asset(AssetsData.persons, height: 15.h),
+            svgPicture: SvgPicture.asset(AssetsData.phone, height: 15.h),
             validator:
                 (value) =>
                     value == null || value.isEmpty
@@ -205,12 +206,37 @@ class _AddShipmentFormState extends State<AddShipmentForm> {
           BlocConsumer<CreateShipmentCubit, CreateShipmentState>(
             listener: (context, state) {
               if (state is CreateShipmentSuccess) {
-                showSnackBar(context, 'تم انشاء الشحنة بنجاح', Colors.green);
+                Fluttertoast.showToast(
+                  msg: "تم انشاء الشحنة بنجاح",
+                  toastLength: Toast.LENGTH_SHORT,
+                  gravity: ToastGravity.CENTER,
+                  backgroundColor: Colors.black87,
+                  textColor: Colors.white,
+                  fontSize: 16.0,
+                );
+                setState(() {
+                  selectedCustomer = null;
+                  selectedOriginCountry = null;
+                  selectedDestinitionCountry = null;
+                  selectedType = null;
+                });
+
+                supplierNameController.clear();
+                supplierNumberController.clear();
+                declaredParcelsCountController.clear();
+                notesController.clear();
+
+                _formKey.currentState?.reset();
               } else if (state is CreateShipmentFailure) {
-                showSnackBar(context, state.message, Colors.red);
-              } else if (state is CreateShipmentLoading) {
-                showSnackBar(context, 'Loading ....', AppColors.goldenYellow);
-              }
+                 Fluttertoast.showToast(
+                  msg: state.message,
+                  toastLength: Toast.LENGTH_SHORT,
+                  gravity: ToastGravity.CENTER,
+                  backgroundColor: Colors.black87,
+                  textColor: Colors.white,
+                  fontSize: 16.0,
+                );
+              } 
             },
             builder: (context, state) {
               return MouseRegion(
@@ -231,7 +257,7 @@ class _AddShipmentFormState extends State<AddShipmentForm> {
                       );
                     }
                   },
-                  child: Container(
+                  child: state is CreateShipmentLoading ? CustomProgressIndicator() : Container(
                     width: 50.w,
                     height: 40.h,
                     decoration: BoxDecoration(

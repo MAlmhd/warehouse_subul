@@ -11,13 +11,13 @@ class LabeledIconTextField extends StatelessWidget {
   const LabeledIconTextField({
     super.key,
     required this.svgPicture,
-    required this.hintText,
+    required this.hintText, required this.controller,
   });
 
   final SvgPicture svgPicture;
 
   final String hintText;
-
+  final TextEditingController controller;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -29,6 +29,7 @@ class LabeledIconTextField extends StatelessWidget {
       ),
       child: TextField(
         textAlign: TextAlign.right,
+        controller: controller,
 
         decoration: InputDecoration(
           border: InputBorder.none,

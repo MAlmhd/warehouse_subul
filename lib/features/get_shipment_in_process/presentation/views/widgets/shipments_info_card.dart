@@ -9,7 +9,7 @@ import 'package:warehouse_subul/core/helpers/styles.dart';
 import 'package:warehouse_subul/core/routing/routes.dart';
 import 'package:warehouse_subul/core/theming/app_colors.dart';
 import 'package:warehouse_subul/core/utils/service_locator.dart';
-import 'package:warehouse_subul/features/get_all_parcels/presentation/views/widgets/custom_item_in_show_all_parcels_table.dart';
+import 'package:warehouse_subul/features/get_shipment_in_process/presentation/views/widgets/custom_item_in_show_all_parcels_table.dart';
 import 'package:warehouse_subul/features/get_shipment_in_process/domain/entities/shipment_in_process_entity/shipment_in_process_entity.dart';
 import 'package:warehouse_subul/features/get_shipment_in_process/domain/use_case/get_drivers_use_case/get_drivers_use_case.dart';
 import 'package:warehouse_subul/features/get_shipment_in_process/domain/use_case/get_shipment_details_use_case/get_shipment_details_use_case.dart';
@@ -25,6 +25,7 @@ import 'package:warehouse_subul/features/get_shipment_in_process/presentation/vi
 import 'package:warehouse_subul/features/get_shipment_in_process/presentation/views/widgets/shipment_receipt.dart';
 import 'package:warehouse_subul/features/get_shipment_in_process/presentation/views/widgets/upload_number_image_and_name_of_driver_shipment.dart';
 
+// ✅ عرض البيانات في صفوف أفقية متراصة مع ترويسة ثابتة
 class ShipmentInfoCard extends StatelessWidget {
   final ShipmentInProcessEntity? shipment;
 
@@ -32,251 +33,127 @@ class ShipmentInfoCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.all(10.h),
-      child: Container(
-        width: double.infinity,
-        padding: EdgeInsets.all(16.w),
-        decoration: BoxDecoration(
-          color: AppColors.lightGray2,
-          borderRadius: BorderRadius.circular(cornerRadius),
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
+    return Column(
+      children: [
+        Padding(
+          padding: EdgeInsets.all(10.h),
+          child: Container(
+            padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
+            decoration: BoxDecoration(
+              color: AppColors.lightGray2,
+              borderRadius: BorderRadius.circular(cornerRadius),
+            ),
+            child: Row(
               children: [
-                Container(
-                  padding: EdgeInsets.all(8.w),
-                  decoration: BoxDecoration(
-                    border: Border.all(
-                      color: AppColors.goldenYellow,
-                      width: 1.5,
-                    ),
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: SvgPicture.asset(
-                    AssetsData.box,
-                    width: 30.w,
-                    height: 30.w,
-                  ),
-                ),
-                SizedBox(width: 16.w),
+                Expanded(flex: 3, child: _buildCell(shipment!.trackingNumber)),
+                Expanded(flex: 2, child: _buildCell(shipment!.originCountry)),
                 Expanded(
-                  child: Column(
-                    textDirection: TextDirection.rtl,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      _buildLine('', shipment!.trackingNumber),
-                      _buildLine('البلد المصدر:', shipment!.originCountry),
-                      _buildLine('البلد الوجهة:', shipment!.destinationCountry),
-                      _buildLine(
-                        'عدد الطرود:',
-                        shipment!.declaredParcelsCount.toString(),
-                      ),
-                      _buildLine(
-                        'تاريخ الشحن:',
-                        _formatDate(shipment!.dateOfShipment),
-                      ),
-                    ],
-                  ),
+                  flex: 2,
+                  child: _buildCell(shipment!.destinationCountry),
                 ),
-              ],
-            ),
-            SizedBox(height: 10.h),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                TextButton.icon(
-                  onPressed: () {
-                    showModalBottomSheet(
-                      context: context,
-                      shape: const RoundedRectangleBorder(
-                        borderRadius: BorderRadius.vertical(
-                          top: Radius.circular(20),
-                        ),
-                      ),
-                      builder: (_) {
-                        return BlocProvider(
-                          create:
-                              (context) => GetShipmentDetailsCubit(
-                                sl.get<GetShipmentDetailsUseCase>(),
-                              )..getShipmentDetails(idShipment: shipment!.id),
-                          child: ShipmentReceipt(),
+                Expanded(
+                  flex: 1,
+                  child: _buildCell(shipment!.declaredParcelsCount.toString()),
+                ),
+                Expanded(
+                  flex: 2,
+                  child: _buildCell(_formatDate(shipment!.dateOfShipment)),
+                ),
+                PopupMenuButton<String>(
+                  icon: Icon(Icons.more_vert, color: Colors.black87),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  onSelected: (value) {
+                    switch (value) {
+                      case 'details':
+                        showModalBottomSheet(
+                          context: context,
+                          shape: const RoundedRectangleBorder(
+                            borderRadius: BorderRadius.vertical(
+                              top: Radius.circular(20),
+                            ),
+                          ),
+                          builder:
+                              (_) => BlocProvider(
+                                create:
+                                    (context) => GetShipmentDetailsCubit(
+                                      sl.get<GetShipmentDetailsUseCase>(),
+                                    )..getShipmentDetails(
+                                      idShipment: shipment!.id,
+                                    ),
+                                child: ShipmentReceipt(),
+                              ),
                         );
-                      },
-                    );
-                  },
-                  icon: const Icon(
-                    Icons.visibility,
-                    color: AppColors.deepPurple,
-                  ),
-                  label: Text(
-                    "عرض التفاصيل",
-                    style: Styles.textStyle4Sp.copyWith(
-                      color: AppColors.deepPurple,
-                    ),
-                  ),
-                ),
-                ElevatedButton.icon(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: AppColors.deepPurple,
-                    padding: EdgeInsets.symmetric(
-                      horizontal: 12.w,
-                      vertical: 8.h,
-                    ),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                  ),
-                  onPressed: () {
-                    showModalBottomSheet(
-                      context: context,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.vertical(
-                          top: Radius.circular(20),
-                        ),
-                      ),
-                      builder:
-                          (_) => MultiBlocProvider(
-                            providers: [
-                              BlocProvider(
-                                create:
-                                    (context) => GetDriversCubit(
-                                      sl.get<GetDriversUseCase>(),
-                                    )..getDrivers(),
-                              ),
-                              BlocProvider(
-                                create:
-                                    (context) => UpdateShipmentForDeliveryCubit(
-                                      sl
-                                          .get<
-                                            UpdateShipmentForDeliveryUseCase
-                                          >(),
-                                    ),
-                              ),
-                            ],
-                            child: UploadNumberImageAndNameOfDriverShipment(
-                              shipmentId: shipment!.id,
-                            ),
-                          ),
-                    );
-                  },
-                  icon: const Icon(Icons.local_shipping, color: Colors.white),
-                  label: Text(
-                    "تعيين سائق",
-                    style: Styles.textStyle4Sp.copyWith(color: Colors.white),
-                  ),
-                ),
-                TextButton.icon(
-                  style: TextButton.styleFrom(
-                    backgroundColor: AppColors.goldenYellow,
-                    padding: EdgeInsets.symmetric(
-                      horizontal: 12.w,
-                      vertical: 8.h,
-                    ),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                  ),
-                  onPressed: () {
-                    showModalBottomSheet(
-                      context: context,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.vertical(
-                          top: Radius.circular(20),
-                        ),
-                      ),
-                      builder:
-                          (_) => MultiBlocProvider(
-                            providers: [
-                              BlocProvider(
-                                create:
-                                    (context) =>
-                                        UpdateShipmentOriginCountryCubit(
-                                          sl.get<UpdateShipmentOriginUseCase>(),
-                                        ),
-                              ),
-                              BlocProvider(
-                                create:
-                                    (
-                                      context,
-                                    ) => UpdateShipmentDestenationCountryCubit(
-                                      sl
-                                          .get<
-                                            UpdateShipmentDestenationCountryUseCase
-                                          >(),
-                                    ),
-                              ),
-                            ],
-                            child: CountrySwitchContainer(
-                              idShipment: shipment!.id,
-                            ),
-                          ),
-                    );
-                  },
-                  icon: Icon(Icons.edit, color: Colors.white),
-                  label: Text(
-                    'تعديل الشحنة',
-                    style: Styles.textStyle4Sp.copyWith(color: Colors.white),
-                  ),
-                ),
+                        break;
 
-                ElevatedButton.icon(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: AppColors.goldenYellow,
-                    padding: EdgeInsets.symmetric(
-                      horizontal: 12.w,
-                      vertical: 8.h,
-                    ),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                  ),
-                  onPressed: () {
-                    context.pushNamed(Routes.showParcelsOfSpecificShipment,arguments: shipment!.id,);
+                      case 'driver':
+                        context.pushNamed(
+                          Routes.uploadNameAndNumberOfDriver,
+                          arguments: shipment!.id,
+                        );
+                        break;
+                      case 'edit':
+                        context.pushNamed(
+                          Routes.editCountry,
+                          arguments: shipment!.id,
+                        );
+                        break;
+                      case 'parcels':
+                        context.pushNamed(
+                          Routes.showParcelsOfSpecificShipment,
+                          arguments: shipment!.id,
+                        );
+                        break;
+                      case 'create parcel':
+                        context.pushNamed(Routes.createParcel,arguments: shipment!.id);
+                        break;
+                    }
                   },
-                  icon: const Icon(Icons.inventory_2, color: Colors.white),
-                  label: Text(
-                    "عرض الطرود",
-                    style: Styles.textStyle4Sp.copyWith(color: Colors.white),
-                  ),
+                  itemBuilder:
+                      (context) => [
+                        PopupMenuItem(
+                          value: 'details',
+                          child: Text('عرض التفاصيل'),
+                        ),
+                        PopupMenuItem(
+                          value: 'driver',
+                          child: Text('تعيين سائق'),
+                        ),
+                        PopupMenuItem(
+                          value: 'edit',
+                          child: Text('تعديل الشحنة'),
+                        ),
+                        PopupMenuItem(
+                          value: 'parcels',
+                          child: Text('عرض الطرود'),
+                        ),
+                        PopupMenuItem(
+                          value: 'create parcel',
+                          child: Text('انشاء طرود'),
+                        ),
+                      ],
                 ),
               ],
             ),
-          ],
+          ),
         ),
-      ),
+      ],
     );
   }
 
-  Widget _buildLine(String label, String value) {
-    return Padding(
-      padding: EdgeInsets.symmetric(vertical: 4.h),
-      child: RichText(
-        text: TextSpan(
-          children: [
-            TextSpan(
-              text: '$label ',
-              style: Styles.textStyle5Sp.copyWith(
-                fontWeight: FontWeight.bold,
-                color: Colors.black,
-              ),
-            ),
-            TextSpan(
-              text: value,
-              style: Styles.textStyle5Sp.copyWith(color: Colors.black),
-            ),
-          ],
-        ),
-      ),
+  Widget _buildCell(String value) {
+    return Text(
+      value,
+      style: Styles.textStyle5Sp.copyWith(color: Colors.black),
+      overflow: TextOverflow.ellipsis,
     );
   }
 
   String _formatDate(String isoDate) {
     try {
       final date = DateTime.parse(isoDate);
-      return '${date.day}-${date.month}-${date.year}';
+      return '${date.year}-${date.month}-${date.day}';
     } catch (_) {
       return isoDate;
     }

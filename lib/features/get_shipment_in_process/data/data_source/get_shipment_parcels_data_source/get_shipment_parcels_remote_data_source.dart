@@ -29,7 +29,7 @@ class GetShipmentParcelsRemoteDataSourceImpl
     if (data['data'] == null) {
       return [];
     }
-    log("$data");
+   
     List<SpecificParcelsOfShipmentEntity> parcels = [];
     for (var element in data['data']) {
       parcels.add(SpecificAprcelsOfShipmentModel.fromJson(element));
