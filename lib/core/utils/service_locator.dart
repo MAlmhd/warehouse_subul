@@ -64,9 +64,13 @@ import 'package:warehouse_subul/features/get_shipment_in_process/domain/use_case
 import 'package:warehouse_subul/features/get_shipment_in_process/domain/use_case/update_shipment_for_delivery_use_case/update_shipment_for_delivery_use_case.dart';
 import 'package:warehouse_subul/features/get_shipment_in_process/domain/use_case/update_shipment_origin_country_use_case/update_shipment_origin_use_case.dart';
 import 'package:warehouse_subul/features/get_shipments_in_the_way/data/data_source/get_shipments_in_the_way_data_source/get_shipments_in_the_way_remote_data_source.dart';
+import 'package:warehouse_subul/features/get_shipments_in_the_way/data/data_source/update_shipments_warehouse_arrival_data_source/update_shipments_warehouse_arrival_remote_data_source.dart';
 import 'package:warehouse_subul/features/get_shipments_in_the_way/data/repos/get_shipments_in_the_way_repo_impl/get_shipments_in_the_way_repo_impl.dart';
+import 'package:warehouse_subul/features/get_shipments_in_the_way/data/repos/update_shipments_warehouse_arrival_repo_impl/update_shipments_warehouse_arrival_repo_impl.dart';
 import 'package:warehouse_subul/features/get_shipments_in_the_way/domain/repos/get_shipments_in_the_way_repo/get_shipments_in_the_way_repo.dart';
+import 'package:warehouse_subul/features/get_shipments_in_the_way/domain/repos/update_shipments_warehouse_arrival_repo/update_shipments_warehouse_arrival_repo.dart';
 import 'package:warehouse_subul/features/get_shipments_in_the_way/domain/use_case/get_shipments_in_the_way_use_case/get_shipments_in_the_way_use_case.dart';
+import 'package:warehouse_subul/features/get_shipments_in_the_way/domain/use_case/update_shipments_warehouse_arrival_use_case/update_shipments_warehouse_arrival_use_case.dart';
 import 'package:warehouse_subul/features/sign_in/data/data_sources/sign_in_remote_data_source.dart';
 import 'package:warehouse_subul/features/sign_in/data/repos/sign_in_repo_impl.dart';
 import 'package:warehouse_subul/features/sign_in/domain/repos/sign_in_repo.dart';
@@ -306,5 +310,20 @@ void setupServiceLocator() {
 
   sl.registerLazySingleton<GetShipmentsInTheWayUseCase>(
     () => GetShipmentsInTheWayUseCase(sl.get<GetShipmentsInTheWayRepo>()),
+  );
+
+
+  // update shipments warehouse arrival
+    sl.registerLazySingleton<UpdateShipmentsWarehouseArrivalRemoteDataSource>(
+    ()=> UpdateShipmentsWarehouseArrivalRemoteDataSourceImpl(sl.get<ApiService>())
+  );
+  sl.registerLazySingleton<UpdateShipmentsWarehouseArrivalRepo>(
+  () => UpdateShipmentsWarehouseArrivalRepoImpl(
+    sl.get<UpdateShipmentsWarehouseArrivalRemoteDataSource>() 
+  ),
+);
+
+  sl.registerLazySingleton<UpdateShipmentsWarehouseArrivalUseCase>(
+    () => UpdateShipmentsWarehouseArrivalUseCase(sl.get<UpdateShipmentsWarehouseArrivalRepo>()),
   );
 }

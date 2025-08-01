@@ -8,18 +8,24 @@ import 'package:warehouse_subul/features/get_all_parcels/presentation/views/show
 import 'package:warehouse_subul/features/get_shipment_in_process/domain/use_case/create_parcel_item_use_case/create_parcel_item_use_case.dart';
 import 'package:warehouse_subul/features/get_shipment_in_process/domain/use_case/get_allowed_content_use_case/get_allowed_content_use_case.dart';
 import 'package:warehouse_subul/features/get_shipment_in_process/domain/use_case/get_parcel_items_use_case/get_parcel_items_use_case.dart';
+import 'package:warehouse_subul/features/get_shipment_in_process/domain/use_case/get_shipment_details_use_case/get_shipment_details_use_case.dart';
 import 'package:warehouse_subul/features/get_shipment_in_process/domain/use_case/update_shipment_destenation_country_use_case/update_shipment_destenation_country_use_case.dart';
 import 'package:warehouse_subul/features/get_shipment_in_process/domain/use_case/update_shipment_origin_country_use_case/update_shipment_origin_use_case.dart';
 import 'package:warehouse_subul/features/get_shipment_in_process/presentation/manager/create_parcel_item_cubit/create_parcel_item_cubit.dart';
 import 'package:warehouse_subul/features/get_shipment_in_process/presentation/manager/get_allowed_content_cubit/get_allowed_content_cubit.dart';
 import 'package:warehouse_subul/features/get_shipment_in_process/presentation/manager/get_parcel_items_cubit/get_parcel_items_cubit.dart';
+import 'package:warehouse_subul/features/get_shipment_in_process/presentation/manager/get_shipment_details/get_shipment_details_cubit.dart';
 import 'package:warehouse_subul/features/get_shipment_in_process/presentation/manager/update_shipment_destenation_country_cubit/update_shipment_destenation_country_cubit.dart';
 import 'package:warehouse_subul/features/get_shipment_in_process/presentation/manager/update_shipment_origin_country_cubit/update_shipment_origin_country_cubit.dart';
 import 'package:warehouse_subul/features/get_shipment_in_process/presentation/views/widgets/country_switch_container.dart';
 import 'package:warehouse_subul/features/get_shipment_in_process/presentation/views/widgets/create_parcel.dart';
 import 'package:warehouse_subul/features/get_shipment_in_process/presentation/views/widgets/create_parcel_item_screen.dart';
+import 'package:warehouse_subul/features/get_shipment_in_process/presentation/views/widgets/shipment_receipt.dart';
 import 'package:warehouse_subul/features/get_shipment_in_process/presentation/views/widgets/show_parcel_items_screen.dart';
 import 'package:warehouse_subul/features/get_shipment_in_process/presentation/views/widgets/show_parcels_of_specific_shipment.dart';
+import 'package:warehouse_subul/features/get_shipments_in_the_way/domain/use_case/update_shipments_warehouse_arrival_use_case/update_shipments_warehouse_arrival_use_case.dart';
+import 'package:warehouse_subul/features/get_shipments_in_the_way/presentation/manager/update_shipments_warehouse_arrival_cubit/update_shipments_warehouse_arrival_cubit.dart';
+import 'package:warehouse_subul/features/get_shipments_in_the_way/presentation/views/widgets/update_shipments_warehouse_arrival_screen.dart';
 import 'package:warehouse_subul/features/get_shipment_in_process/presentation/views/widgets/upload_number_image_and_name_of_driver_shipment.dart';
 import 'package:warehouse_subul/features/warehouse_manager/ui/widgets/dimension_calculation.dart';
 import 'package:warehouse_subul/features/warehouse_manager/ui/widgets/volumetric_weight_calculation.dart';
@@ -111,10 +117,32 @@ class AppRouter {
         return MaterialPageRoute(
           builder:
               (context) => BlocProvider(
-                create: (context) => GetParcelItemsCubit(sl.get<GetParcelItemsUseCase>()),
+                create:
+                    (context) =>
+                        GetParcelItemsCubit(sl.get<GetParcelItemsUseCase>()),
                 child: ShowParcelItemsScreen(id: id),
               ),
         );
+      case Routes.updateShipmentsWarehouseArrivalScreen:
+        final id = arguments as int;
+        return MaterialPageRoute(
+          builder:
+              (context) => BlocProvider(
+                create: (context) => UpdateShipmentsWarehouseArrivalCubit(sl.get<UpdateShipmentsWarehouseArrivalUseCase>()),
+                child: UpdateShipmentsWarehouseArrivalScreen(id: id),
+              ),
+        );
+        case Routes.shipmentReceipt:
+        final id = arguments as int;
+        return MaterialPageRoute(builder: (context) =>  BlocProvider(
+                                create:
+                                    (context) => GetShipmentDetailsCubit(
+                                      sl.get<GetShipmentDetailsUseCase>(),
+                                    )..getShipmentDetails(
+                                      idShipment: id,
+                                    ),
+                                child: ShipmentReceipt(),
+                              ),);
       default:
         return null;
     }

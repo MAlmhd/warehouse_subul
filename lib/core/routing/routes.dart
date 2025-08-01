@@ -9,4 +9,6 @@ class Routes {
  static const String dimensionCalculation= '/dimensionCalculation';
  static const String createParcelItemScreen= '/createParcelItemScreen';
  static const String showParcelItemsScreen= '/showParcelItemsScreen';
+ static const String updateShipmentsWarehouseArrivalScreen= '/updateShipmentsWarehouseArrivalScreen';
+ static const String shipmentReceipt= '/shipmentReceipt';
 }

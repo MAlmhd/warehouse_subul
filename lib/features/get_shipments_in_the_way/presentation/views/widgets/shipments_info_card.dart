@@ -5,11 +5,11 @@ import 'package:warehouse_subul/core/helpers/extensions.dart';
 import 'package:warehouse_subul/core/helpers/styles.dart';
 import 'package:warehouse_subul/core/routing/routes.dart';
 import 'package:warehouse_subul/core/theming/app_colors.dart';
-import 'package:warehouse_subul/features/get_shipment_in_process/domain/entities/shipment_in_process_entity/shipment_in_process_entity.dart';
+import 'package:warehouse_subul/features/get_shipments_in_the_way/domain/entity/shipment_in_the_way_entity/shipment_in_the_way_entity.dart';
 
 // ✅ عرض البيانات في صفوف أفقية متراصة مع ترويسة ثابتة
 class ShipmentInfoCard extends StatelessWidget {
-  final ShipmentInProcessEntity? shipment;
+  final ShipmentInTheWayEntity? shipment;
 
   const ShipmentInfoCard({super.key, this.shipment});
 
@@ -35,12 +35,21 @@ class ShipmentInfoCard extends StatelessWidget {
                 ),
                 Expanded(
                   flex: 1,
-                  child: _buildCell(shipment!.declaredParcelsCount.toString()),
+                  child: _buildCell(shipment!.actualParcelsCount.toString()),
                 ),
                 Expanded(
                   flex: 2,
-                  child: _buildCell(_formatDate(shipment!.dateOfShipment)),
+                  child: _buildCell(_formatDate(shipment!.customerName)),
                 ),
+                Expanded(
+                  flex: 2,
+                  child: _buildCell(_formatDate(shipment!.status)),
+                ),
+                Expanded(
+                  flex: 2,
+                  child: _buildCell(_formatDate(shipment!.type)),
+                ),
+
                 PopupMenuButton<String>(
                   icon: Icon(Icons.more_vert, color: Colors.black87),
                   shape: RoundedRectangleBorder(
@@ -48,58 +57,30 @@ class ShipmentInfoCard extends StatelessWidget {
                   ),
                   onSelected: (value) {
                     switch (value) {
-                      case 'details':
-                        context.pushNamed(Routes.shipmentReceipt,arguments: shipment!.id);
-                        break;
-
-                      case 'driver':
+                      case 'update':
                         context.pushNamed(
-                          Routes.uploadNameAndNumberOfDriver,
-                          arguments: shipment!.id,
+                          Routes.updateShipmentsWarehouseArrivalScreen,
+                          arguments: shipment!.id
                         );
                         break;
-                      case 'edit':
-                        context.pushNamed(
-                          Routes.editCountry,
-                          arguments: shipment!.id,
-                        );
-                        break;
-                      case 'parcels':
-                        context.pushNamed(
-                          Routes.showParcelsOfSpecificShipment,
-                          arguments: shipment!.id,
-                        );
-                        break;
-                      case 'create parcel':
-                        context.pushNamed(
-                          Routes.createParcel,
-                          arguments: shipment!.id,
-                        );
-                        break;
+                        // case 'parcels':
+                        // context.pushNamed(
+                        //   Routes.showParcelsOfSpecificShipment,
+                        //   arguments: shipment!.id,
+                        // );
+                        // break;
                     }
                   },
                   itemBuilder:
                       (context) => [
                         PopupMenuItem(
-                          value: 'details',
-                          child: Text('عرض التفاصيل'),
+                          value: 'update',
+                          child: Text('تحديث  الشحنة'),
                         ),
-                        PopupMenuItem(
-                          value: 'driver',
-                          child: Text('تعيين سائق'),
-                        ),
-                        PopupMenuItem(
-                          value: 'edit',
-                          child: Text('تعديل الشحنة'),
-                        ),
-                        PopupMenuItem(
-                          value: 'parcels',
-                          child: Text('عرض الطرود'),
-                        ),
-                        PopupMenuItem(
-                          value: 'create parcel',
-                          child: Text('انشاء طرود'),
-                        ),
+                        // PopupMenuItem(
+                        //   value: 'parcels',
+                        //   child: Text('عرض الطرود'),
+                        // ),
                       ],
                 ),
               ],

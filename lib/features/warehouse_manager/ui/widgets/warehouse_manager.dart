@@ -21,6 +21,9 @@ import 'package:warehouse_subul/features/get_all_parcels/presentation/views/show
 import 'package:warehouse_subul/features/get_shipment_in_process/domain/use_case/get_shipments_in_process_use_case/get_shipments_in_process_use_case.dart';
 import 'package:warehouse_subul/features/get_shipment_in_process/presentation/manager/get_shipments_in_process_cubit/get_shipment_in_proccess_cubit.dart';
 import 'package:warehouse_subul/features/get_shipment_in_process/presentation/views/show_shipments_in_process_screen.dart';
+import 'package:warehouse_subul/features/get_shipments_in_the_way/domain/use_case/get_shipments_in_the_way_use_case/get_shipments_in_the_way_use_case.dart';
+import 'package:warehouse_subul/features/get_shipments_in_the_way/presentation/manager/get_shipments_in_the_way_cubit/get_shipments_in_the_way_cubit.dart';
+import 'package:warehouse_subul/features/get_shipments_in_the_way/presentation/views/get_shipments_in_the_way_screen.dart';
 
 class WarehouseManager extends StatefulWidget {
   const WarehouseManager({super.key});
@@ -142,13 +145,14 @@ class _WarehouseManagerState extends State<WarehouseManager> {
                           )..getShipments(),
                       child: ShowShipmentsInProcessScreen(),
                     ),
-                    BlocProvider(
-                      create:
-                          (context) =>
-                              GetAllParcelsCubit(sl.get<GetAllParcelsUseCase>())
-                                ..getAllParcels(),
-                      child: ShowAllParcels(),
-                    ),
+                    BlocProvider(create: (context) => GetShipmentsInTheWayCubit(sl.get<GetShipmentsInTheWayUseCase>())..getShipmentsInTheWay(),child: GetShipmentsInTheWayScreen(),),
+                    // BlocProvider(
+                    //   create:
+                    //       (context) =>
+                    //           GetAllParcelsCubit(sl.get<GetAllParcelsUseCase>())
+                    //             ..getAllParcels(),
+                    //   child: ShowAllParcels(),
+                    // ),
                     // EditReceivingShipmentsTable(
                     //   widget: CustomOkButton(
                     //     onTap: () {},
