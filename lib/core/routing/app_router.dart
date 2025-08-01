@@ -25,6 +25,7 @@ import 'package:warehouse_subul/features/get_shipment_in_process/presentation/vi
 import 'package:warehouse_subul/features/get_shipment_in_process/presentation/views/widgets/show_parcels_of_specific_shipment.dart';
 import 'package:warehouse_subul/features/get_shipments_in_the_way/domain/use_case/update_shipments_warehouse_arrival_use_case/update_shipments_warehouse_arrival_use_case.dart';
 import 'package:warehouse_subul/features/get_shipments_in_the_way/presentation/manager/update_shipments_warehouse_arrival_cubit/update_shipments_warehouse_arrival_cubit.dart';
+import 'package:warehouse_subul/features/get_shipments_in_the_way/presentation/views/widgets/show_specific_parcels_of_in_the_way_shipments.dart';
 import 'package:warehouse_subul/features/get_shipments_in_the_way/presentation/views/widgets/update_shipments_warehouse_arrival_screen.dart';
 import 'package:warehouse_subul/features/get_shipment_in_process/presentation/views/widgets/upload_number_image_and_name_of_driver_shipment.dart';
 import 'package:warehouse_subul/features/warehouse_manager/ui/widgets/dimension_calculation.dart';
@@ -143,6 +144,9 @@ class AppRouter {
                                     ),
                                 child: ShipmentReceipt(),
                               ),);
+        case Routes.showSpecificParcelsOfInTheWayShipments:
+        final id = arguments as int;
+        return MaterialPageRoute(builder: (context) => ShowSpecificParcelsOfInTheWayShipments(shipmentId: id,),);
       default:
         return null;
     }

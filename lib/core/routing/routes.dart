@@ -11,4 +11,5 @@ class Routes {
  static const String showParcelItemsScreen= '/showParcelItemsScreen';
  static const String updateShipmentsWarehouseArrivalScreen= '/updateShipmentsWarehouseArrivalScreen';
  static const String shipmentReceipt= '/shipmentReceipt';
+ static const String showSpecificParcelsOfInTheWayShipments= '/showSpecificParcelsOfInTheWayShipments';
 }

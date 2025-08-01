@@ -63,12 +63,12 @@ class ShipmentInfoCard extends StatelessWidget {
                           arguments: shipment!.id
                         );
                         break;
-                        // case 'parcels':
-                        // context.pushNamed(
-                        //   Routes.showParcelsOfSpecificShipment,
-                        //   arguments: shipment!.id,
-                        // );
-                        // break;
+                        case 'parcels':
+                        context.pushNamed(
+                          Routes.showSpecificParcelsOfInTheWayShipments,
+                          arguments: shipment!.id,
+                        );
+                        break;
                     }
                   },
                   itemBuilder:
@@ -77,10 +77,10 @@ class ShipmentInfoCard extends StatelessWidget {
                           value: 'update',
                           child: Text('تحديث  الشحنة'),
                         ),
-                        // PopupMenuItem(
-                        //   value: 'parcels',
-                        //   child: Text('عرض الطرود'),
-                        // ),
+                        PopupMenuItem(
+                          value: 'parcels',
+                          child: Text('عرض الطرود'),
+                        ),
                       ],
                 ),
               ],
